@@ -1,0 +1,56 @@
+{% extends 'shop/base.html' %}
+
+{% block form %}
+{% load cart %}
+
+<div class="container">
+    
+    <div class="border rounded p-4 m-4">
+        <table class="table">
+            <h2 class="display-2">Your's Order</h2>
+            <hr>
+            <thead>
+                <tr>
+                    <th>Sno.</th>
+                    <th>Image</th>
+                    <th>Name</th>
+                    
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                    <th>Status</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td><img style=" height:80px;" class="rounded-circle" src="{{order.product.img.url}}" alt=""></td>
+                    <td>{{order.product.title}}</td>
+                    <td>{{order.product.price}}</td>
+                  
+                    <td>{{ order.quantity}}</td>
+                    <td>{{ order.quantity|multiply:order.price }}</td>
+                     {% if order.status %}
+                    <td>Complete</td>
+                    {% else %}
+                    <td>Pending</td>
+                    {% endif %}
+                     
+                </tr>
+                {% endfor %}
+            </tbody>
+             
+        </table>
+       
+        </div>
+
+    </div>
+
+</div>
+ 
+
+
+
+{% endblock form %}

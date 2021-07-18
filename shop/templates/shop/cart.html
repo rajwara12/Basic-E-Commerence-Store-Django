@@ -1,0 +1,76 @@
+{% extends 'shop/base.html' %}
+{% block title %}Cart {% endblock title %}
+{% block form %}
+{% load cart %}
+<div class="container">
+    <h2 class="display-2">Your's Cart</h2>
+    <div class="border rounded">
+<table class="table">
+    <thead>
+        <tr>
+            <th>Sno.</th>
+            <th>Image</th>
+            <th>Name</th> 
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total Price</th>
+        </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+        <tr>
+          <td>{{forloop.counter}}</td>
+             <td> <img style=" height:80px;" class="rounded-circle" src="{{product.img.url}}" alt=""> </td>
+            <td>{{product.title}}</td>
+            <td>{{product|quantity_cart:request.session.cart}}</td>
+            <td>{{product.price}}</td>
+          
+            <td>{{product|total_cart:request.session.cart}}</td>
+        </tr>
+         {% endfor %}
+    </tbody>
+    <tfoot>
+          
+        
+    </tfoot>
+</table>
+<div class="m-3 p-3  ">
+    <a  href="#" type="button" class="btn btn-outline-info col-lg-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Checkout
+    </a>
+</div>
+    </div>
+</div>
+ 
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Checkout</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="/checkout" method="post">{% csrf_token %}
+              <div class="form-group">
+                <label for="">Address</label>
+                <input type="text" name="address" id="" class="form-control" placeholder="" aria-describedby="helpId">
+                 
+              </div>
+              <label for="">Phone</label>
+                <input type="text" name="phone" id="" class="form-control" placeholder="" aria-describedby="helpId">
+                 
+              </div>
+              <input type="Submit" class="btn btn-outline-info" value="Order Now">
+          </form>
+        </div>
+         
+      </div>
+    </div>
+  </div>
+
+
+
+
+{% endblock form %}
